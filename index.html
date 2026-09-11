@@ -32,7 +32,7 @@
             height: auto;
             display: block;
             filter: grayscale(100%);
-            transition: filter 0.3s ease;
+            transition: filter 0.3s ease, transform 0.5s ease;
         }
 
         img:hover {
@@ -82,7 +82,7 @@
         }
 
         .hero h1 {
-            font-size: Clamp(32px, 8vw, 96px);
+            font-size: clamp(32px, 8vw, 96px);
             font-weight: 900;
             line-height: 0.9;
             margin-bottom: 20px;
@@ -105,6 +105,62 @@
         .btn:hover {
             background-color: #fff;
             color: #000;
+        }
+
+        /* --- WATCH CATEGORIES SECTION --- */
+        .categories-section {
+            padding: 100px 20px 60px 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .category-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #222;
+            transition: border-color 0.3s ease;
+        }
+
+        .category-card:hover {
+            border-color: #fff;
+        }
+
+        .category-image-container {
+            background-color: #111;
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
+        }
+
+        .category-card:hover img {
+            transform: scale(1.03);
+        }
+
+        .category-overlay {
+            padding: 20px;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .category-title {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .category-desc {
+            color: #666;
+            font-size: 10px;
         }
 
         /* --- PRODUCT GRID --- */
@@ -189,6 +245,9 @@
                 flex-direction: column;
                 gap: 15px;
             }
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
             .grid {
                 grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
             }
@@ -206,6 +265,7 @@
         <div class="logo">ARCHIVE // RESALE</div>
         <nav>
             <ul>
+                <li><a href="#categories">KATEGORIER</a></li>
                 <li><a href="#shop">SHOP</a></li>
                 <li><a href="#sell">SÄLJ DIN KLÄDER</a></li>
                 <li><a href="#about">OM OSS</a></li>
@@ -217,8 +277,58 @@
     <!-- HERO SECTION -->
     <section class="hero">
         <h1>CURATED<br>ARCHIVE</h1>
-        <p>Exklusiv resale av streetwear, designerplagg och sällsynta vintageobjekt.</p>
-        <a href="#shop" class="btn">UTFORSKA UTBUDET</a>
+        <p>Exklusiv resale av streetwear, lyxklockor och sällsynta vintageobjekt.</p>
+        <a href="#categories" class="btn">UTFORSKA KATEGORIER</a>
+    </section>
+
+    <!-- WATCH CATEGORIES SECTION -->
+    <section class="categories-section" id="categories">
+        <div class="section-title">[ KLOCKKATEGORIER // TIMEPIECES ]</div>
+        <div class="category-grid">
+            
+            <!-- SPORT -->
+            <a href="#shop" class="category-card">
+                <div class="category-image-container">
+                    <img src="https://via.placeholder.com/600x800/1a1a1a/ffffff?text=SPORT+WATCH" alt="Sport klockor">
+                </div>
+                <div class="category-overlay">
+                    <div>
+                        <div class="category-title">SPORT</div>
+                        <div class="category-desc">Dykarklockor, kronografer & tåliga modeller</div>
+                    </div>
+                    <span class="btn" style="padding: 6px 16px; font-size: 10px;">SE UTBUD</span>
+                </div>
+            </a>
+
+            <!-- CLASS -->
+            <a href="#shop" class="category-card">
+                <div class="category-image-container">
+                    <img src="https://via.placeholder.com/600x800/1a1a1a/ffffff?text=CLASS+WATCH" alt="Class klockor">
+                </div>
+                <div class="category-overlay">
+                    <div>
+                        <div class="category-title">CLASS</div>
+                        <div class="category-desc">Dressur, ädelmetaller & tidlös elegans</div>
+                    </div>
+                    <span class="btn" style="padding: 6px 16px; font-size: 10px;">SE UTBUD</span>
+                </div>
+            </a>
+
+            <!-- DAILY -->
+            <a href="#shop" class="category-card">
+                <div class="category-image-container">
+                    <img src="https://via.placeholder.com/600x800/1a1a1a/ffffff?text=DAILY+WATCH" alt="Daily klockor">
+                </div>
+                <div class="category-overlay">
+                    <div>
+                        <div class="category-title">DAILY</div>
+                        <div class="category-desc">Mångsidiga modeller för vardaglig användning</div>
+                    </div>
+                    <span class="btn" style="padding: 6px 16px; font-size: 10px;">SE UTBUD</span>
+                </div>
+            </a>
+
+        </div>
     </section>
 
     <!-- PRODUCT GRID -->
@@ -278,14 +388,14 @@
 
     <!-- SELL SECTION (FOR RESALE) -->
     <section class="sell-banner" id="sell">
-        <h2>VILL DU SÄLJA DINA PLAGG?</h2>
-        <p style="color: #888; max-width: 500px; margin-bottom: 30px;">Vi köper in eller säljer dina exklusiva plagg på kommission. Enkel process och snabb värdering.</p>
+        <h2>VILL DU SÄLJA DINA PLAGG ELLER KLOCKOR?</h2>
+        <p style="color: #888; max-width: 500px; margin-bottom: 30px;">Vi köper in eller säljer dina exklusiva objekten på kommission. Enkel process och snabb värdering.</p>
         <a href="mailto:sell@dinresale.com" class="btn">SKICKA FÖRFRÅGAN</a>
     </section>
 
     <!-- FOOTER -->
     <footer>
-        <div>&copy; 2026 ARCHIVE RESALE SYSTEM. ALLA RÄTTIGHETER FORBEHÅLLNA.</div>
+        <div>&copy; 2026 ARCHIVE RESALE SYSTEM. ALLA RÄTTIGHETER FÖRBEHÅLLNA.</div>
         <div>INSTAGRAM / VILLKOR / KONTAKT</div>
     </footer>
 
