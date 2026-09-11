@@ -20,6 +20,7 @@
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            overflow-x: hidden;
         }
 
         a {
@@ -37,6 +38,26 @@
 
         img:hover {
             filter: grayscale(0%);
+        }
+
+        /* --- SVG SCROLL CONNECTOR LINES --- */
+        #connector-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .scroll-line {
+            fill: none;
+            stroke: #444;
+            stroke-width: 1.5;
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            transition: stroke-dashoffset 0.05s linear;
         }
 
         /* --- HEADER / NAVIGATION --- */
@@ -67,10 +88,10 @@
 
         /* --- TYPEWRITER QUOTE --- */
         .typewriter-quote {
-            font-family: "Courier New", Courier, monospace; /* Typewriter-typsnitt */
+            font-family: "Courier New", Courier, monospace;
             font-size: 9px;
             color: #888;
-            text-transform: none; /* Behåller originaltecken för stilren känsla */
+            text-transform: none;
             letter-spacing: 0px;
             border-right: 2px solid #888;
             white-space: nowrap;
@@ -83,7 +104,6 @@
                 blink-caret 0.75s step-end infinite;
         }
 
-        /* Animationer för typewriter */
         @keyframes fadeIn {
             to { opacity: 1; }
         }
@@ -118,6 +138,7 @@
             text-align: center;
             padding: 20px;
             border-bottom: 1px solid #222;
+            position: relative;
         }
 
         .hero h1 {
@@ -150,6 +171,7 @@
         .categories-section {
             padding: 100px 20px 60px 20px;
             border-bottom: 1px solid #222;
+            position: relative;
         }
 
         .category-grid {
@@ -165,6 +187,8 @@
             overflow: hidden;
             border: 1px solid #222;
             transition: border-color 0.3s ease;
+            background-color: #000;
+            z-index: 60;
         }
 
         .category-card:hover {
@@ -294,16 +318,27 @@
                 flex-direction: column;
                 gap: 20px;
             }
+            /* Dölj linjerna på mobiler för renare mobilvy */
+            #connector-svg {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- SVG OVERLAY FÖR SCROLL-LINJER -->
+    <svg id="connector-svg">
+        <path id="line-sport" class="scroll-line" />
+        <path id="line-class" class="scroll-line" />
+        <path id="line-daily" class="scroll-line" />
+    </svg>
+
     <!-- NAVIGATION -->
     <header>
         <div class="logo-container">
             <div class="logo">ARCHIVE // RESALE</div>
-            <div class="typewriter-quote">"Every man needs 3 things, a sportswatch, a sexy classic watch and a special daily" - probably Barack Obama</div>
+            <div class="typewriter-quote" id="start-quote">"Every man needs 3 things, a sportswatch, a sexy classic watch and a special daily" - probably Barack Obama</div>
         </div>
         <nav>
             <ul>
@@ -329,7 +364,7 @@
         <div class="category-grid">
             
             <!-- SPORT -->
-            <a href="#shop" class="category-card">
+            <a href="#shop" class="category-card" id="card-sport">
                 <div class="category-image-container">
                     <img src="https://via.placeholder.com/600x800/1a1a1a/ffffff?text=SPORT+WATCH" alt="Sport klockor">
                 </div>
@@ -343,7 +378,7 @@
             </a>
 
             <!-- CLASS -->
-            <a href="#shop" class="category-card">
+            <a href="#shop" class="category-card" id="card-class">
                 <div class="category-image-container">
                     <img src="https://via.placeholder.com/600x800/1a1a1a/ffffff?text=CLASS+WATCH" alt="Class klockor">
                 </div>
@@ -357,7 +392,7 @@
             </a>
 
             <!-- DAILY -->
-            <a href="#shop" class="category-card">
+            <a href="#shop" class="category-card" id="card-daily">
                 <div class="category-image-container">
                     <img src="https://via.placeholder.com/600x800/1a1a1a/ffffff?text=DAILY+WATCH" alt="Daily klockor">
                 </div>
@@ -441,5 +476,72 @@
         <div>INSTAGRAM / VILLKOR / KONTAKT</div>
     </footer>
 
+    <!-- JAVASCRIPT FÖR RITNING AV LINJER VID SCROLL -->
+    <script>
+        const quoteEl = document.getElementById('start-quote');
+        const cards = {
+            sport: document.getElementById('card-sport'),
+            class: document.getElementById('card-class'),
+            daily: document.getElementById('card-daily')
+        };
+        const lines = {
+            sport: document.getElementById('line-sport'),
+            class: document.getElementById('line-class'),
+            daily: document.getElementById('line-daily')
+        };
+
+        function updateSvgPaths() {
+            const svg = document.getElementById('connector-svg');
+            svg.setAttribute('height', document.documentElement.scrollHeight);
+            svg.setAttribute('width', window.innerWidth);
+
+            const quoteRect = quoteEl.getBoundingClientRect();
+            const startX = quoteRect.left + 20; 
+            const startY = quoteRect.bottom + window.scrollY + 5;
+
+            Object.keys(cards).forEach(key => {
+                const cardRect = cards[key].getBoundingClientRect();
+                const endX = cardRect.left + (cardRect.width / 2);
+                const endY = cardRect.top + window.scrollY;
+
+                // Böjd Bézier-kurva (C startX,controlY1 controlX2,controlY2 endX,endY)
+                const controlY1 = startY + (endY - startY) * 0.5;
+                const controlY2 = startY + (endY - startY) * 0.2;
+                
+                const d = `M ${startX} ${startY} C ${startX} ${controlY1}, ${endX} ${controlY2}, ${endX} ${endY}`;
+                
+                const line = lines[key];
+                line.setAttribute('d', d);
+
+                const length = line.getTotalLength();
+                line.style.strokeDasharray = length;
+            });
+        }
+
+        function drawLinesOnScroll() {
+            const scrollY = window.scrollY;
+            const targetY = cards.sport.getBoundingClientRect().top + window.scrollY - 300;
+            const progress = Math.min(Math.max(scrollY / targetY, 0), 1);
+
+            Object.keys(lines).forEach(key => {
+                const line = lines[key];
+                const length = line.getTotalLength();
+                line.style.strokeDashoffset = length * (1 - progress);
+            });
+        }
+
+        window.addEventListener('resize', () => {
+            updateSvgPaths();
+            drawLinesOnScroll();
+        });
+
+        window.addEventListener('scroll', drawLinesOnScroll);
+
+        // Initialisera vid laddning
+        window.addEventListener('load', () => {
+            updateSvgPaths();
+            drawLinesOnScroll();
+        });
+    </script>
 </body>
 </html>
