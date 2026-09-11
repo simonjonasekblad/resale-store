@@ -53,7 +53,7 @@
 
         .scroll-line {
             fill: none;
-            stroke: #444;
+            stroke: #555;
             stroke-width: 1.5;
             stroke-dasharray: 2000;
             stroke-dashoffset: 2000;
@@ -69,53 +69,15 @@
             padding: 20px;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             z-index: 100;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(5px);
         }
 
-        .logo-container {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
         .logo {
             font-weight: 700;
             font-size: 14px;
-        }
-
-        /* --- TYPEWRITER QUOTE --- */
-        .typewriter-quote {
-            font-family: "Courier New", Courier, monospace;
-            font-size: 9px;
-            color: #888;
-            text-transform: none;
-            letter-spacing: 0px;
-            border-right: 2px solid #888;
-            white-space: nowrap;
-            overflow: hidden;
-            width: 0;
-            opacity: 0;
-            animation: 
-                fadeIn 0.1s forwards 1s,
-                typing 4s steps(100, end) 1s forwards,
-                blink-caret 0.75s step-end infinite;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: #888; }
         }
 
         nav ul {
@@ -130,13 +92,13 @@
 
         /* --- HERO SECTION --- */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 20px;
+            padding: 120px 20px 60px 20px;
             border-bottom: 1px solid #222;
             position: relative;
         }
@@ -167,9 +129,51 @@
             color: #000;
         }
 
+        /* --- CENTERED TYPEWRITER QUOTE --- */
+        .quote-wrapper {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .typewriter-quote {
+            font-family: "Courier New", Courier, monospace;
+            font-size: clamp(13px, 2vw, 18px); /* Större typsnitt */
+            color: #aaa;
+            text-transform: none;
+            letter-spacing: 0.5px;
+            border-right: 2px solid #888;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            opacity: 0;
+            display: inline-block;
+            margin: 0 auto;
+            animation: 
+                fadeIn 0.1s forwards 1s,
+                typing 4.5s steps(90, end) 1s forwards,
+                blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #888; }
+        }
+
         /* --- WATCH CATEGORIES SECTION --- */
         .categories-section {
-            padding: 100px 20px 60px 20px;
+            padding: 120px 20px 60px 20px;
             border-bottom: 1px solid #222;
             position: relative;
         }
@@ -303,6 +307,18 @@
         }
 
         /* --- RESPONSIVITET --- */
+        @media (max-width: 900px) {
+            .typewriter-quote {
+                white-space: normal;
+                border-right: none;
+                animation: fadeIn 1s forwards 1s;
+                width: 100%;
+            }
+            #connector-svg {
+                display: none;
+            }
+        }
+
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -318,10 +334,6 @@
                 flex-direction: column;
                 gap: 20px;
             }
-            /* Dölj linjerna på mobiler för renare mobilvy */
-            #connector-svg {
-                display: none;
-            }
         }
     </style>
 </head>
@@ -336,10 +348,7 @@
 
     <!-- NAVIGATION -->
     <header>
-        <div class="logo-container">
-            <div class="logo">ARCHIVE // RESALE</div>
-            <div class="typewriter-quote" id="start-quote">"Every man needs 3 things, a sportswatch, a sexy classic watch and a special daily" - probably Barack Obama</div>
-        </div>
+        <div class="logo">ARCHIVE // RESALE</div>
         <nav>
             <ul>
                 <li><a href="#categories">KATEGORIER</a></li>
@@ -356,6 +365,13 @@
         <h1>CURATED<br>ARCHIVE</h1>
         <p>Exklusiv resale av streetwear, lyxklockor och sällsynta vintageobjekt.</p>
         <a href="#categories" class="btn">UTFORSKA KATEGORIER</a>
+
+        <!-- CENTERED QUOTE -->
+        <div class="quote-wrapper">
+            <div class="typewriter-quote" id="start-quote">
+                "Every man needs 3 things, a sportswatch, a sexy classic watch and a special daily" - probably Barack Obama
+            </div>
+        </div>
     </section>
 
     <!-- WATCH CATEGORIES SECTION -->
@@ -496,17 +512,19 @@
             svg.setAttribute('width', window.innerWidth);
 
             const quoteRect = quoteEl.getBoundingClientRect();
-            const startX = quoteRect.left + 20; 
-            const startY = quoteRect.bottom + window.scrollY + 5;
+            
+            // Startpunkt centrerad under citatet
+            const startX = quoteRect.left + (quoteRect.width / 2); 
+            const startY = quoteRect.bottom + window.scrollY + 10;
 
             Object.keys(cards).forEach(key => {
                 const cardRect = cards[key].getBoundingClientRect();
                 const endX = cardRect.left + (cardRect.width / 2);
                 const endY = cardRect.top + window.scrollY;
 
-                // Böjd Bézier-kurva (C startX,controlY1 controlX2,controlY2 endX,endY)
-                const controlY1 = startY + (endY - startY) * 0.5;
-                const controlY2 = startY + (endY - startY) * 0.2;
+                // Mjuka Bézier-kurvor från mitten och ut mot korten
+                const controlY1 = startY + (endY - startY) * 0.45;
+                const controlY2 = startY + (endY - startY) * 0.25;
                 
                 const d = `M ${startX} ${startY} C ${startX} ${controlY1}, ${endX} ${controlY2}, ${endX} ${endY}`;
                 
@@ -520,8 +538,12 @@
 
         function drawLinesOnScroll() {
             const scrollY = window.scrollY;
+            const quoteTop = quoteEl.getBoundingClientRect().top + window.scrollY;
             const targetY = cards.sport.getBoundingClientRect().top + window.scrollY - 300;
-            const progress = Math.min(Math.max(scrollY / targetY, 0), 1);
+
+            // Beräkna scroll-framsteg från när citatet passerar skärmen ner till kategorierna
+            const startScroll = quoteTop - window.innerHeight + 100;
+            const progress = Math.min(Math.max((scrollY - startScroll) / (targetY - startScroll), 0), 1);
 
             Object.keys(lines).forEach(key => {
                 const line = lines[key];
@@ -537,7 +559,6 @@
 
         window.addEventListener('scroll', drawLinesOnScroll);
 
-        // Initialisera vid laddning
         window.addEventListener('load', () => {
             updateSvgPaths();
             drawLinesOnScroll();
