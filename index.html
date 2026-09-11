@@ -40,7 +40,7 @@
             filter: grayscale(0%);
         }
 
-        /* --- SVG SCROLL CONNECTOR LINES --- */
+        /* --- SVG CONNECTOR LINES --- */
         #connector-svg {
             position: absolute;
             top: 0;
@@ -69,15 +69,55 @@
             padding: 20px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             z-index: 100;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(5px);
         }
 
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 60%;
+        }
+
         .logo {
             font-weight: 700;
             font-size: 14px;
+        }
+
+        /* --- TYPEWRITER QUOTE IN CORNER --- */
+        .typewriter-quote {
+            font-family: "Courier New", Courier, monospace;
+            font-size: clamp(11px, 1.2vw, 14px); /* Större storlek i hörnet */
+            color: #aaa;
+            text-transform: none;
+            letter-spacing: 0px;
+            border-right: 2px solid #888;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            opacity: 0;
+            display: inline-block;
+            animation: 
+                fadeIn 0.1s forwards 1s,
+                typing 4.5s steps(90, end) 1s forwards,
+                blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #888; }
         }
 
         nav ul {
@@ -92,13 +132,13 @@
 
         /* --- HERO SECTION --- */
         .hero {
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 120px 20px 60px 20px;
+            padding: 20px;
             border-bottom: 1px solid #222;
             position: relative;
         }
@@ -127,48 +167,6 @@
         .btn:hover {
             background-color: #fff;
             color: #000;
-        }
-
-        /* --- CENTERED TYPEWRITER QUOTE --- */
-        .quote-wrapper {
-            margin-top: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-        }
-
-        .typewriter-quote {
-            font-family: "Courier New", Courier, monospace;
-            font-size: clamp(13px, 2vw, 18px); /* Större typsnitt */
-            color: #aaa;
-            text-transform: none;
-            letter-spacing: 0.5px;
-            border-right: 2px solid #888;
-            white-space: nowrap;
-            overflow: hidden;
-            width: 0;
-            opacity: 0;
-            display: inline-block;
-            margin: 0 auto;
-            animation: 
-                fadeIn 0.1s forwards 1s,
-                typing 4.5s steps(90, end) 1s forwards,
-                blink-caret 0.75s step-end infinite;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: #888; }
         }
 
         /* --- WATCH CATEGORIES SECTION --- */
@@ -339,7 +337,7 @@
 </head>
 <body>
 
-    <!-- SVG OVERLAY FÖR SCROLL-LINJER -->
+    <!-- SVG OVERLAY FÖR LINES -->
     <svg id="connector-svg">
         <path id="line-sport" class="scroll-line" />
         <path id="line-class" class="scroll-line" />
@@ -348,7 +346,12 @@
 
     <!-- NAVIGATION -->
     <header>
-        <div class="logo">ARCHIVE // RESALE</div>
+        <div class="logo-container">
+            <div class="logo">ARCHIVE // RESALE</div>
+            <div class="typewriter-quote" id="start-quote">
+                "Every man needs 3 things, a sportswatch, a sexy classic watch and a special daily" - probably Barack Obama
+            </div>
+        </div>
         <nav>
             <ul>
                 <li><a href="#categories">KATEGORIER</a></li>
@@ -365,13 +368,6 @@
         <h1>CURATED<br>ARCHIVE</h1>
         <p>Exklusiv resale av streetwear, lyxklockor och sällsynta vintageobjekt.</p>
         <a href="#categories" class="btn">UTFORSKA KATEGORIER</a>
-
-        <!-- CENTERED QUOTE -->
-        <div class="quote-wrapper">
-            <div class="typewriter-quote" id="start-quote">
-                "Every man needs 3 things, a sportswatch, a sexy classic watch and a special daily" - probably Barack Obama
-            </div>
-        </div>
     </section>
 
     <!-- WATCH CATEGORIES SECTION -->
@@ -492,7 +488,7 @@
         <div>INSTAGRAM / VILLKOR / KONTAKT</div>
     </footer>
 
-    <!-- JAVASCRIPT FÖR RITNING AV LINJER VID SCROLL -->
+    <!-- JAVASCRIPT FOR LINES AND ANIMATION -->
     <script>
         const quoteEl = document.getElementById('start-quote');
         const cards = {
@@ -506,6 +502,8 @@
             daily: document.getElementById('line-daily')
         };
 
+        let currentProgress = 0; // Animation progress (0 till 1)
+
         function updateSvgPaths() {
             const svg = document.getElementById('connector-svg');
             svg.setAttribute('height', document.documentElement.scrollHeight);
@@ -513,18 +511,18 @@
 
             const quoteRect = quoteEl.getBoundingClientRect();
             
-            // Startpunkt centrerad under citatet
-            const startX = quoteRect.left + (quoteRect.width / 2); 
-            const startY = quoteRect.bottom + window.scrollY + 10;
+            // Startpunkt från vänster hörn under citatet
+            const startX = quoteRect.left + 20; 
+            const startY = quoteRect.bottom + window.scrollY + 6;
 
             Object.keys(cards).forEach(key => {
                 const cardRect = cards[key].getBoundingClientRect();
                 const endX = cardRect.left + (cardRect.width / 2);
                 const endY = cardRect.top + window.scrollY;
 
-                // Mjuka Bézier-kurvor från mitten och ut mot korten
-                const controlY1 = startY + (endY - startY) * 0.45;
-                const controlY2 = startY + (endY - startY) * 0.25;
+                // Böjda kurvor från vänstra citatet ner till vardera kort
+                const controlY1 = startY + (endY - startY) * 0.5;
+                const controlY2 = startY + (endY - startY) * 0.2;
                 
                 const d = `M ${startX} ${startY} C ${startX} ${controlY1}, ${endX} ${controlY2}, ${endX} ${endY}`;
                 
@@ -536,15 +534,7 @@
             });
         }
 
-        function drawLinesOnScroll() {
-            const scrollY = window.scrollY;
-            const quoteTop = quoteEl.getBoundingClientRect().top + window.scrollY;
-            const targetY = cards.sport.getBoundingClientRect().top + window.scrollY - 300;
-
-            // Beräkna scroll-framsteg från när citatet passerar skärmen ner till kategorierna
-            const startScroll = quoteTop - window.innerHeight + 100;
-            const progress = Math.min(Math.max((scrollY - startScroll) / (targetY - startScroll), 0), 1);
-
+        function applyLineProgress(progress) {
             Object.keys(lines).forEach(key => {
                 const line = lines[key];
                 const length = line.getTotalLength();
@@ -552,16 +542,46 @@
             });
         }
 
+        function handleScrollProgress() {
+            const scrollY = window.scrollY;
+            const targetY = cards.sport.getBoundingClientRect().top + window.scrollY - 300;
+            const scrollProgress = Math.min(Math.max(scrollY / targetY, 0), 1);
+            
+            // Kombinera tidsbaserad animation och scroll
+            const effectiveProgress = Math.max(currentProgress, scrollProgress);
+            applyLineProgress(effectiveProgress);
+        }
+
+        // Starta linjeanimationen automatiskt samtidigt som typewriter startar (efter 1 sek)
+        function startLineAutoAnimation() {
+            setTimeout(() => {
+                const startTime = performance.now();
+                const duration = 4500; // Samma längd som typewriter (4.5s)
+
+                function animateLines(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    currentProgress = Math.min(elapsed / duration, 1);
+
+                    handleScrollProgress();
+
+                    if (currentProgress < 1) {
+                        requestAnimationFrame(animateLines);
+                    }
+                }
+                requestAnimationFrame(animateLines);
+            }, 1000); // 1 sekunds fördröjning
+        }
+
         window.addEventListener('resize', () => {
             updateSvgPaths();
-            drawLinesOnScroll();
+            handleScrollProgress();
         });
 
-        window.addEventListener('scroll', drawLinesOnScroll);
+        window.addEventListener('scroll', handleScrollProgress);
 
         window.addEventListener('load', () => {
             updateSvgPaths();
-            drawLinesOnScroll();
+            startLineAutoAnimation();
         });
     </script>
 </body>
