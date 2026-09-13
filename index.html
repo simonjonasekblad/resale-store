@@ -15,8 +15,8 @@
         }
 
         body {
-            background-color: #000000;
-            color: #ffffff;
+            background-color: #ffffff;
+            color: #000000;
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -32,12 +32,11 @@
             width: 100%;
             height: auto;
             display: block;
-            filter: grayscale(100%);
-            transition: filter 0.3s ease, transform 0.5s ease;
+            transition: transform 0.5s ease;
         }
 
         img:hover {
-            filter: grayscale(0%);
+            transform: scale(1.03);
         }
 
         /* --- SVG CONNECTOR LINES --- */
@@ -53,7 +52,7 @@
 
         .scroll-line {
             fill: none;
-            stroke: #555;
+            stroke: #ccc;
             stroke-width: 1.5;
             stroke-dasharray: 2000;
             stroke-dashoffset: 2000;
@@ -71,8 +70,9 @@
             justify-content: space-between;
             align-items: flex-start;
             z-index: 100;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(5px);
+            border-bottom: 1px solid #eaeaea;
         }
 
         .logo-container {
@@ -91,10 +91,10 @@
         .typewriter-quote {
             font-family: "Courier New", Courier, monospace;
             font-size: clamp(11px, 1.2vw, 14px);
-            color: #aaa;
+            color: #555;
             text-transform: none;
             letter-spacing: 0px;
-            border-right: 2px solid #888;
+            border-right: 2px solid #555;
             white-space: nowrap;
             overflow: hidden;
             width: 0;
@@ -117,7 +117,7 @@
 
         @keyframes blink-caret {
             from, to { border-color: transparent; }
-            50% { border-color: #888; }
+            50% { border-color: #555; }
         }
 
         nav ul {
@@ -139,7 +139,7 @@
             align-items: center;
             text-align: center;
             padding: 20px;
-            border-bottom: 1px solid #222;
+            border-bottom: 1px solid #eaeaea;
             position: relative;
             z-index: 60;
         }
@@ -149,37 +149,38 @@
             font-weight: 900;
             line-height: 0.9;
             margin-bottom: 20px;
-            background-color: #000;
+            background-color: #ffffff;
             display: inline-block;
             padding: 0 10px;
         }
 
         .hero p {
-            color: #888;
+            color: #555;
             max-width: 400px;
             margin-bottom: 30px;
             line-height: 1.5;
-            background-color: #000;
+            background-color: #ffffff;
             padding: 0 10px;
         }
 
         .btn {
-            border: 1px solid #fff;
+            border: 1px solid #000;
             padding: 12px 30px;
             display: inline-block;
             transition: background 0.3s, color 0.3s;
-            background-color: #000;
+            background-color: #ffffff;
+            color: #000;
         }
 
         .btn:hover {
-            background-color: #fff;
-            color: #000;
+            background-color: #000000;
+            color: #ffffff;
         }
 
         /* --- WATCH CATEGORIES SECTION --- */
         .categories-section {
             padding: 120px 20px 60px 20px;
-            border-bottom: 1px solid #222;
+            border-bottom: 1px solid #eaeaea;
             position: relative;
             z-index: 60;
         }
@@ -195,18 +196,18 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            border: 1px solid #222;
+            border: 1px solid #eaeaea;
             transition: border-color 0.3s ease;
-            background-color: #000;
+            background-color: #ffffff;
             z-index: 60;
         }
 
         .category-card:hover {
-            border-color: #fff;
+            border-color: #000;
         }
 
         .category-image-container {
-            background-color: #111;
+            background-color: #f4f4f4;
             aspect-ratio: 3 / 4;
             overflow: hidden;
         }
@@ -217,7 +218,7 @@
 
         .category-overlay {
             padding: 20px;
-            background-color: #000;
+            background-color: #ffffff;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -232,7 +233,7 @@
         }
 
         .category-desc {
-            color: #666;
+            color: #555;
             font-size: 10px;
         }
 
@@ -246,7 +247,7 @@
         .section-title {
             margin-bottom: 40px;
             font-size: 12px;
-            color: #666;
+            color: #555;
         }
 
         .grid {
@@ -261,7 +262,7 @@
         }
 
         .image-container {
-            background-color: #111;
+            background-color: #f4f4f4;
             margin-bottom: 15px;
             aspect-ratio: 3 / 4;
             display: flex;
@@ -281,19 +282,19 @@
         }
 
         .product-price {
-            color: #aaa;
+            color: #444;
         }
 
         .product-meta {
-            color: #555;
+            color: #666;
             font-size: 10px;
         }
 
         /* --- RESALE INFO / SELL BANNER --- */
         .sell-banner {
             padding: 100px 20px;
-            border-top: 1px solid #222;
-            border-bottom: 1px solid #222;
+            border-top: 1px solid #eaeaea;
+            border-bottom: 1px solid #eaeaea;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -312,10 +313,11 @@
             padding: 40px 20px;
             display: flex;
             justify-content: space-between;
-            color: #444;
+            color: #666;
             font-size: 10px;
             position: relative;
             z-index: 60;
+            border-top: 1px solid #eaeaea;
         }
 
         /* --- RESPONSIVITET --- */
@@ -442,7 +444,7 @@
             <!-- Produkt 1 -->
             <div class="product-card">
                 <div class="image-container">
-                    <img src="https://via.placeholder.com/600x800/1a1a1a/ffffff?text=HOODIE+01" alt="Yeezy style hoodie">
+                    <img src="https://via.placeholder.com/600x800/f4f4f4/000000?text=HOODIE+01" alt="Yeezy style hoodie">
                 </div>
                 <div class="product-info">
                     <span class="product-title">HEAVYWEIGHT HOODIE</span>
@@ -454,7 +456,7 @@
             <!-- Produkt 2 -->
             <div class="product-card">
                 <div class="image-container">
-                    <img src="https://via.placeholder.com/600x800/1a1a1a/ffffff?text=PANTS+02" alt="Cargo pants">
+                    <img src="https://via.placeholder.com/600x800/f4f4f4/000000?text=PANTS+02" alt="Cargo pants">
                 </div>
                 <div class="product-info">
                     <span class="product-title">TACTICAL CARGO PANTS</span>
@@ -466,7 +468,7 @@
             <!-- Produkt 3 -->
             <div class="product-card">
                 <div class="image-container">
-                    <img src="https://via.placeholder.com/600x800/1a1a1a/ffffff?text=JACKET+03" alt="Puffer jacket">
+                    <img src="https://via.placeholder.com/600x800/f4f4f4/000000?text=JACKET+03" alt="Puffer jacket">
                 </div>
                 <div class="product-info">
                     <span class="product-title">OVERSIZED PUFFER</span>
@@ -478,7 +480,7 @@
             <!-- Produkt 4 -->
             <div class="product-card">
                 <div class="image-container">
-                    <img src="https://via.placeholder.com/600x800/1a1a1a/ffffff?text=BOOTS+04" alt="Boots">
+                    <img src="https://via.placeholder.com/600x800/f4f4f4/000000?text=BOOTS+04" alt="Boots">
                 </div>
                 <div class="product-info">
                     <span class="product-title">DESERT BOOTS</span>
@@ -492,7 +494,7 @@
     <!-- SELL SECTION (FOR RESALE) -->
     <section class="sell-banner" id="sell">
         <h2>VILL DU SÄLJA DINA PLAGG ELLER KLOCKOR?</h2>
-        <p style="color: #888; max-width: 500px; margin-bottom: 30px;">Vi köper in eller säljer dina exklusiva objekten på kommission. Enkel process och snabb värdering.</p>
+        <p style="color: #555; max-width: 500px; margin-bottom: 30px;">Vi köper in eller säljer dina exklusiva objekten på kommission. Enkel process och snabb värdering.</p>
         <a href="mailto:sell@dinresale.com" class="btn">SKICKA FÖRFRÅGAN</a>
     </section>
 
