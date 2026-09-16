@@ -3,33 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARCHIVE // RESALE</title>
+    <title>ARCHIVE // RESALE - ROYAL EDITION</title>
+    
+    <!-- IMPORTERA TRENDIGA TYPSNITT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Grotesk:wght@300;400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* --- RESET & GLOBAL STYLES --- */
+        /* --- RESET & GLOBAL VARIABLES --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
         :root {
-            --bg-color: #0b1a13;         /* Mörk skogsgrön */
-            --bg-surface: #10241b;       /* Något ljusare grön för kort & overlays */
-            --gold-primary: #d4af37;     /* Klassiskt guld */
-            --gold-light: #f3e5ab;       /* Ljust guld för undertext/detaljer */
-            --gold-border: rgba(212, 175, 55, 0.3); /* Transparent guld för ramar */
-            --gold-glow: rgba(212, 175, 55, 0.15);
+            --bg-color: #050e09;         /* Ultra-mörk skogsgrön */
+            --bg-surface: #0a1b13;       /* Djup emeraldgrön */
+            --bg-card: #0f271c;          /* Skimmrande grön */
+            --gold-primary: #f0d076;     /* Skimrande champagne-guld */
+            --gold-secondary: #c59b27;   /* Antikt guld */
+            --gold-light: #fbeec8;       /* Ljus guldcreme */
+            --gold-border: rgba(240, 208, 118, 0.4);
+            --gold-glow: rgba(240, 208, 118, 0.25);
+            --font-serif: 'Playfair Display', serif;
+            --font-display: 'Cinzel', serif;
+            --font-sans: 'Space Grotesk', sans-serif;
+            --font-accent: 'Syne', sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--gold-primary);
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(15, 39, 28, 0.8) 0%, transparent 75%),
+                radial-gradient(circle at 100% 50%, rgba(197, 155, 39, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, rgba(10, 27, 19, 0.9) 0%, transparent 50%);
+            color: var(--gold-light);
+            font-family: var(--font-sans);
+            font-size: 13px;
+            letter-spacing: 1.5px;
             position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Bakgrundsmönster (Maximalistiskt guilloché-mönster) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(rgba(240, 208, 118, 0.03) 1px, transparent 0);
+            background-size: 24px 24px;
+            pointer-events: none;
+            z-index: 1;
         }
 
         a {
@@ -41,8 +68,7 @@
             width: 100%;
             height: auto;
             display: block;
-            filter: none; /* Bilder har färg från början */
-            transition: transform 0.5s ease, filter 0.3s ease;
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
         }
 
         /* --- SVG LINES OVERLAY --- */
@@ -58,12 +84,19 @@
 
         .curved-line {
             fill: none;
-            stroke: var(--gold-primary);
-            stroke-width: 1.5;
+            stroke: url(#gold-gradient);
+            stroke-width: 2;
             stroke-dasharray: 2000;
             stroke-dashoffset: 2000;
             transition: stroke-dashoffset 0.1s linear;
-            filter: drop-shadow(0px 0px 3px rgba(212, 175, 55, 0.5));
+            filter: drop-shadow(0px 0px 6px rgba(240, 208, 118, 0.7));
+        }
+
+        /* --- GRADIENT TEXT UTILITY --- */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, var(--gold-light) 30%, var(--gold-primary) 70%, var(--gold-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         /* --- HEADER / NAVIGATION --- */
@@ -72,35 +105,37 @@
             top: 0;
             left: 0;
             width: 100%;
-            padding: 20px;
+            padding: 25px 40px;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             z-index: 100;
-            background: rgba(11, 26, 19, 0.9);
-            backdrop-filter: blur(8px);
+            background: rgba(5, 14, 9, 0.85);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--gold-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .logo-container {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
         }
 
         .logo {
-            font-weight: 700;
-            font-size: 14px;
-            letter-spacing: 2px;
-            color: #ffffff;
-            text-shadow: 0 0 10px var(--gold-glow);
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 18px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
         }
 
-        /* --- TYPEWRITER QUOTE --- */
+        /* TYPEWRITER QUOTE */
         .typewriter-quote {
-            font-family: "Courier New", Courier, monospace;
-            font-size: 10px;
-            color: var(--gold-light);
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 11px;
+            color: var(--gold-primary);
             text-transform: none;
             letter-spacing: 0px;
             border-right: 2px solid var(--gold-primary);
@@ -114,34 +149,37 @@
                 blink-caret 0.75s step-end infinite;
         }
 
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: var(--gold-primary); }
-        }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: var(--gold-primary); } }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 30px;
         }
 
         nav a {
-            transition: color 0.3s ease, text-shadow 0.3s ease;
+            font-family: var(--font-display);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.3s ease;
         }
 
-        nav a:hover {
-            color: #ffffff;
-            text-shadow: 0 0 8px var(--gold-primary);
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 0%; height: 1px;
+            background: var(--gold-primary);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px var(--gold-primary);
         }
+
+        nav a:hover::after { width: 100%; }
+        nav a:hover { color: #ffffff; }
 
         /* --- HERO SECTION --- */
         .hero {
@@ -154,55 +192,101 @@
             padding: 20px;
             border-bottom: 1px solid var(--gold-border);
             position: relative;
+            z-index: 2;
+        }
+
+        .hero-ornament {
+            font-family: var(--font-display);
+            font-size: 12px;
+            color: var(--gold-secondary);
+            letter-spacing: 6px;
+            margin-bottom: 15px;
         }
 
         .hero h1 {
-            font-size: clamp(32px, 8vw, 96px);
+            font-family: var(--font-serif);
+            font-size: clamp(40px, 9vw, 110px);
             font-weight: 900;
-            line-height: 0.9;
-            margin-bottom: 20px;
-            color: #ffffff;
-            background: linear-gradient(185deg, #ffffff 40%, var(--gold-primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-style: italic;
+            line-height: 0.95;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            text-shadow: 0 0 30px var(--gold-glow);
         }
 
         .hero p {
+            font-family: var(--font-sans);
             color: var(--gold-light);
-            max-width: 400px;
-            margin-bottom: 30px;
-            line-height: 1.5;
-            font-size: 11px;
+            max-width: 480px;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.9;
         }
 
+        /* FANCY BUTTON */
         .btn {
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: 3px;
+            font-size: 11px;
             border: 1px solid var(--gold-primary);
-            color: var(--gold-primary);
-            padding: 12px 30px;
+            color: var(--bg-color);
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 50%, var(--gold-secondary) 100%);
+            padding: 16px 40px;
             display: inline-block;
-            background: transparent;
+            position: relative;
+            z-index: 1;
             transition: all 0.4s ease;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            box-shadow: 0 0 25px var(--gold-glow);
+            text-transform: uppercase;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
 
         .btn:hover {
-            background-color: var(--gold-primary);
-            color: var(--bg-color);
-            box-shadow: 0 0 15px var(--gold-primary);
-            font-weight: 700;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 35px rgba(240, 208, 118, 0.6);
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--gold-secondary) 0%, var(--gold-primary) 100%);
         }
 
-        /* --- WATCH CATEGORIES SECTION --- */
+        /* --- CATEGORIES SECTION --- */
         .categories-section {
-            padding: 120px 20px 80px 20px;
+            padding: 140px 40px 100px 40px;
             border-bottom: 1px solid var(--gold-border);
             position: relative;
+            z-index: 2;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 6px;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 13px;
+            color: var(--gold-secondary);
+            letter-spacing: 2px;
+            text-transform: none;
         }
 
         .category-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 30px;
         }
 
         .category-card {
@@ -212,167 +296,222 @@
             overflow: hidden;
             border: 1px solid var(--gold-border);
             background-color: var(--bg-surface);
-            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            transition: all 0.5s ease;
         }
 
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border: 1px solid var(--gold-primary);
+            margin: -4px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .category-card:hover::before { opacity: 1; }
+
         .category-card:hover {
+            transform: translateY(-8px);
             border-color: var(--gold-primary);
-            box-shadow: 0 0 20px var(--gold-glow);
+            box-shadow: 0 20px 40px var(--gold-glow);
         }
 
         .category-image-container {
-            background-color: #07120d;
+            background-color: #030805;
             aspect-ratio: 3 / 4;
             overflow: hidden;
+            position: relative;
         }
 
         .category-card:hover img {
-            transform: scale(1.05);
+            transform: scale(1.08);
+            filter: brightness(1.1);
         }
 
         .category-overlay {
-            padding: 20px;
-            background-color: var(--bg-surface);
+            padding: 25px;
+            background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-card) 100%);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 15px;
+            gap: 20px;
             border-top: 1px solid var(--gold-border);
         }
 
         .category-title {
-            font-size: 18px;
-            font-weight: 800;
+            font-family: var(--font-serif);
+            font-size: 26px;
+            font-weight: 700;
+            font-style: italic;
             letter-spacing: 2px;
             color: #ffffff;
         }
 
         .category-desc {
+            font-family: var(--font-sans);
             color: var(--gold-light);
-            font-size: 10px;
-            margin-top: 4px;
+            font-size: 11px;
+            line-height: 1.5;
+            margin-top: 6px;
+            opacity: 0.8;
+            text-transform: none;
         }
 
         /* --- PRODUCT GRID --- */
         .products-section {
-            padding: 100px 20px 60px 20px;
-        }
-
-        .section-title {
-            margin-bottom: 40px;
-            font-size: 12px;
-            color: var(--gold-primary);
-            letter-spacing: 2px;
+            padding: 120px 40px 80px 40px;
+            position: relative;
+            z-index: 2;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 40px 20px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 50px 30px;
         }
 
         .product-card {
             display: flex;
             flex-direction: column;
+            background: var(--bg-surface);
+            padding: 15px;
+            border: 1px solid var(--gold-border);
+            transition: all 0.4s ease;
+        }
+
+        .product-card:hover {
+            border-color: var(--gold-primary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            transform: translateY(-4px);
         }
 
         .image-container {
-            background-color: var(--bg-surface);
-            margin-bottom: 15px;
+            background-color: #030805;
+            margin-bottom: 20px;
             aspect-ratio: 3 / 4;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            border: 1px solid var(--gold-border);
-            transition: border-color 0.3s;
-        }
-
-        .product-card:hover .image-container {
-            border-color: var(--gold-primary);
+            border: 1px solid rgba(240, 208, 118, 0.2);
+            position: relative;
         }
 
         .product-card:hover img {
-            transform: scale(1.03);
+            transform: scale(1.05);
         }
 
         .product-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 5px;
+            align-items: baseline;
+            margin-bottom: 8px;
         }
 
         .product-title {
-            font-weight: 600;
+            font-family: var(--font-serif);
+            font-size: 16px;
+            font-weight: 700;
             color: #ffffff;
+            letter-spacing: 1px;
         }
 
         .product-price {
+            font-family: var(--font-display);
             color: var(--gold-primary);
-            font-weight: 700;
+            font-weight: 800;
+            font-size: 14px;
         }
 
         .product-meta {
-            color: var(--gold-light);
+            font-family: var(--font-sans);
+            color: var(--gold-secondary);
             font-size: 10px;
-            opacity: 0.8;
+            letter-spacing: 2px;
+            border-top: 1px dashed var(--gold-border);
+            padding-top: 8px;
+            margin-top: 5px;
         }
 
-        /* --- RESALE INFO / SELL BANNER --- */
+        /* --- SELL BANNER --- */
         .sell-banner {
-            padding: 100px 20px;
+            padding: 120px 20px;
             border-top: 1px solid var(--gold-border);
             border-bottom: 1px solid var(--gold-border);
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            background: linear-gradient(180deg, var(--bg-color) 0%, var(--bg-surface) 50%, var(--bg-color) 100%);
+            background: linear-gradient(180deg, var(--bg-color) 0%, var(--bg-card) 50%, var(--bg-color) 100%);
+            position: relative;
+            z-index: 2;
         }
 
         .sell-banner h2 {
-            font-size: clamp(24px, 5vw, 48px);
+            font-family: var(--font-serif);
+            font-size: clamp(28px, 6vw, 56px);
+            font-style: italic;
+            font-weight: 800;
             margin-bottom: 20px;
-            color: #ffffff;
         }
 
         /* --- FOOTER --- */
         footer {
-            padding: 40px 20px;
+            padding: 60px 40px;
             display: flex;
             justify-content: space-between;
-            color: var(--gold-light);
-            font-size: 10px;
-            opacity: 0.7;
+            align-items: center;
+            color: var(--gold-secondary);
+            font-family: var(--font-display);
+            font-size: 11px;
+            letter-spacing: 2px;
+            border-top: 1px solid var(--gold-border);
+            position: relative;
+            z-index: 2;
+            background: var(--bg-color);
         }
 
         /* --- RESPONSIVITET --- */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             header {
                 flex-direction: column;
                 gap: 15px;
+                padding: 20px;
             }
             .category-grid {
                 grid-template-columns: 1fr;
             }
             .grid {
-                grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+                grid-template-columns: 1fr;
             }
             footer {
                 flex-direction: column;
                 gap: 20px;
+                text-align: center;
             }
             #svg-container {
-                display: none; /* Döljer linjerna på mobiler för renare gränssnitt */
+                display: none;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- SVG OVERLAY FOR ANIMATED LINES -->
+    <!-- SVG OVERLAY FOR ANIMATED GOLD GRADIENT LINES -->
     <svg id="svg-container">
+        <defs>
+            <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="30%" stop-color="#f0d076" />
+                <stop offset="70%" stop-color="#c59b27" />
+                <stop offset="100%" stop-color="#fbeec8" />
+            </linearGradient>
+        </defs>
         <path id="line-sport" class="curved-line" />
         <path id="line-class" class="curved-line" />
         <path id="line-daily" class="curved-line" />
@@ -381,7 +520,7 @@
     <!-- NAVIGATION -->
     <header>
         <div class="logo-container">
-            <div class="logo">ARCHIVE // RESALE</div>
+            <div class="logo gold-gradient-text">ARCHIVE // RESALE</div>
             <div class="typewriter-quote" id="quote">"Every man needs 3 things, a sportswatch, a sexy classic watch and a special daily" - probably Barack Obama</div>
         </div>
         <nav>
@@ -397,55 +536,60 @@
 
     <!-- HERO SECTION -->
     <section class="hero">
-        <h1>CURATED<br>ARCHIVE</h1>
-        <p>Exklusiv resale av streetwear, lyxklockor och sällsynta vintageobjekt i ett guldkantat utförande.</p>
+        <div class="hero-ornament">✦ HAUTE HORLOGERIE & CURATED RESALE ✦</div>
+        <h1 class="gold-gradient-text">CURATED<br>ARCHIVE</h1>
+        <p>Sällsynta timepieces, streetwear-arkiv & exklusiva vintageobjekt för den kräsne samlaren.</p>
         <a href="#categories" class="btn">UTFORSKA KATEGORIER</a>
     </section>
 
     <!-- WATCH CATEGORIES SECTION -->
     <section class="categories-section" id="categories">
-        <div class="section-title">[ KLOCKKATEGORIER // TIMEPIECES ]</div>
+        <div class="section-header">
+            <div class="section-title gold-gradient-text">TIMEPIECES & CATEGORIES</div>
+            <div class="section-subtitle">— Det perfekta urvalet för varje tillfälle —</div>
+        </div>
+        
         <div class="category-grid">
             
             <!-- SPORT -->
             <a href="#shop" class="category-card" id="card-sport">
                 <div class="category-image-container">
-                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80" alt="Sport klocka">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" alt="Sport klocka">
                 </div>
                 <div class="category-overlay">
                     <div>
-                        <div class="category-title">SPORT</div>
-                        <div class="category-desc">Dykarklockor, kronografer & tåliga modeller</div>
+                        <div class="category-title">01. Sport</div>
+                        <div class="category-desc">Ikoniska dykarklockor, kronografer & robust lyx tillverkad i stål och titan.</div>
                     </div>
-                    <span class="btn" style="padding: 6px 16px; font-size: 10px;">SE UTBUD</span>
+                    <span class="btn" style="padding: 10px 20px; font-size: 9px;">UTFORSKA</span>
                 </div>
             </a>
 
             <!-- CLASS -->
             <a href="#shop" class="category-card" id="card-class">
                 <div class="category-image-container">
-                    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=600&q=80" alt="Class klocka">
+                    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80" alt="Class klocka">
                 </div>
                 <div class="category-overlay">
                     <div>
-                        <div class="category-title">CLASS</div>
-                        <div class="category-desc">Dressur, ädelmetaller & tidlös elegans</div>
+                        <div class="category-title">02. Class</div>
+                        <div class="category-desc">Eleganta dressur i guld, ädelmetaller & sofistikerad haute horlogerie.</div>
                     </div>
-                    <span class="btn" style="padding: 6px 16px; font-size: 10px;">SE UTBUD</span>
+                    <span class="btn" style="padding: 10px 20px; font-size: 9px;">UTFORSKA</span>
                 </div>
             </a>
 
             <!-- DAILY -->
             <a href="#shop" class="category-card" id="card-daily">
                 <div class="category-image-container">
-                    <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=600&q=80" alt="Daily klocka">
+                    <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80" alt="Daily klocka">
                 </div>
                 <div class="category-overlay">
                     <div>
-                        <div class="category-title">DAILY</div>
-                        <div class="category-desc">Mångsidiga modeller för vardaglig användning</div>
+                        <div class="category-title">03. Daily</div>
+                        <div class="category-desc">Mångsidiga, tidlösa modeller som definierar vardaglig elegans.</div>
                     </div>
-                    <span class="btn" style="padding: 6px 16px; font-size: 10px;">SE UTBUD</span>
+                    <span class="btn" style="padding: 10px 20px; font-size: 9px;">UTFORSKA</span>
                 </div>
             </a>
 
@@ -454,70 +598,73 @@
 
     <!-- PRODUCT GRID -->
     <section class="products-section" id="shop">
-        <div class="section-title">[ NATIONELLT DROPP // 001 ]</div>
+        <div class="section-header">
+            <div class="section-title gold-gradient-text">EXCLUSIVE DROP // 001</div>
+            <div class="section-subtitle">— Handplockade arkivobjekt tillgängliga nu —</div>
+        </div>
         
         <div class="grid">
             <!-- Produkt 1 -->
             <div class="product-card">
                 <div class="image-container">
-                    <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=600&q=80" alt="Heavyweight Hoodie">
+                    <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80" alt="Heavyweight Hoodie">
                 </div>
                 <div class="product-info">
                     <span class="product-title">HEAVYWEIGHT HOODIE</span>
                     <span class="product-price">1 800 SEK</span>
                 </div>
-                <div class="product-meta">STORLEK: L | SKICK: 9/10</div>
+                <div class="product-meta">STORLEK: L &nbsp;|&nbsp; SKICK: 9/10</div>
             </div>
 
             <!-- Produkt 2 -->
             <div class="product-card">
                 <div class="image-container">
-                    <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=600&q=80" alt="Tactical Pants">
+                    <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=800&q=80" alt="Tactical Pants">
                 </div>
                 <div class="product-info">
                     <span class="product-title">TACTICAL CARGO PANTS</span>
                     <span class="product-price">2 200 SEK</span>
                 </div>
-                <div class="product-meta">STORLEK: M | SKICK: 10/10 (BNWT)</div>
+                <div class="product-meta">STORLEK: M &nbsp;|&nbsp; SKICK: 10/10 (BNWT)</div>
             </div>
 
             <!-- Produkt 3 -->
             <div class="product-card">
                 <div class="image-container">
-                    <img src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80" alt="Oversized Puffer">
+                    <img src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80" alt="Oversized Puffer">
                 </div>
                 <div class="product-info">
                     <span class="product-title">OVERSIZED PUFFER</span>
                     <span class="product-price">4 500 SEK</span>
                 </div>
-                <div class="product-meta">STORLEK: XL | SKICK: 8/10</div>
+                <div class="product-meta">STORLEK: XL &nbsp;|&nbsp; SKICK: 8/10</div>
             </div>
 
             <!-- Produkt 4 -->
             <div class="product-card">
                 <div class="image-container">
-                    <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=600&q=80" alt="Desert Boots">
+                    <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80" alt="Desert Boots">
                 </div>
                 <div class="product-info">
                     <span class="product-title">DESERT BOOTS</span>
                     <span class="product-price">3 100 SEK</span>
                 </div>
-                <div class="product-meta">STORLEK: 43 | SKICK: 9.5/10</div>
+                <div class="product-meta">STORLEK: 43 &nbsp;|&nbsp; SKICK: 9.5/10</div>
             </div>
         </div>
     </section>
 
     <!-- SELL SECTION (FOR RESALE) -->
     <section class="sell-banner" id="sell">
-        <h2>VILL DU SÄLJA DINA PLAGG ELLER KLOCKOR?</h2>
-        <p style="color: var(--gold-light); max-width: 500px; margin-bottom: 30px;">Vi köper in eller säljer dina exklusiva objekt på kommission. Enkel process och snabb värdering.</p>
-        <a href="mailto:sell@dinresale.com" class="btn">SKICKA FÖRFRÅGAN</a>
+        <h2 class="gold-gradient-text">VILL DU SÄLJA DINA OBJEKT?</h2>
+        <p style="color: var(--gold-light); max-width: 520px; margin-bottom: 35px; text-transform: none; font-size: 14px;">Vi köper in eller säljer dina exklusiva ur och streetwear-objekt på kommission med diskretion och garanterad trygghet.</p>
+        <a href="mailto:sell@dinresale.com" class="btn">ANSÖK OM KOMMISSION</a>
     </section>
 
     <!-- FOOTER -->
     <footer>
-        <div>&copy; 2026 ARCHIVE RESALE SYSTEM. ALLA RÄTTIGHETER FÖRBEHÅLLNA.</div>
-        <div>INSTAGRAM / VILLKOR / KONTAKT</div>
+        <div>&copy; 2026 ARCHIVE RESALE SYSTEM. ALL RIGHTS RESERVED.</div>
+        <div>INSTAGRAM &nbsp;//&nbsp; TERMS &nbsp;//&nbsp; CONTACT</div>
     </footer>
 
     <!-- DYNAMISK LOGIK FÖR BÖJDA LINJER -->
